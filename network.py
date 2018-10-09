@@ -33,7 +33,7 @@ def create_model(keep_prob = 0.8):
     model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
     model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
     model.add(Flatten())
-    model.add(Dense(150, activation='relu'))
+    model.add(Dense(110, activation='relu'))
     drop_out = 1 - keep_prob
     model.add(Dropout(drop_out))
     model.add(Dense(100, activation='relu'))
@@ -49,21 +49,21 @@ def create_model(keep_prob = 0.8):
 
 if __name__ == '__main__':
     # Load Training Data
-    x_train = np.load("X1.npy")
+    x_train = np.load("X.npy")
     y_train = np.load("y.npy")
 
     print(x_train.shape[0], 'train samples')
     x_train = np.reshape(x_train, (x_train.shape[0], 800, 600, 1))
 
     # Training loop variables
-    epochs = 40
-    batch_size = 10
+    epochs = 200
+    batch_size = 20
 
     model = create_model()
     #plot_model(model,to_file="model.png")
     model.compile(loss=customized_loss, optimizer=optimizers.adam())
     history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, shuffle=True, validation_split=0.3)
-    model.save_weights('model_weights.h5')
+    model.save_weights('model_weights2.h5')
     print(history.history.keys())
     # summarize history for loss
     plt.plot(history.history['loss'])
